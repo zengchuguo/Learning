@@ -1,0 +1,2 @@
+a.toFixed（）小数位的显示位数
+a.tpPrecision（）有效的显示位数

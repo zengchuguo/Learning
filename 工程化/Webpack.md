@@ -65,3 +65,5 @@ DevServer
 ​	https 服务使用 可设置key cert ca
 
 ​	compress 启用Gzip
+
+单页面打包和多页面打包

@@ -9,9 +9,11 @@ CSS处理
 - css-load二处理CSS
 - style-loader移植到html `MiniCssExtractPlugin.loader`
 - postcss-loader 兼容性
-- `extract-text-webpack-plugin`样式改名 直接生成打包好的CSS
+- `mini-css-webpack-plugin`样式改名 直接生成打包好的CSS
 
-SCSS Less
+Less
+
+npm i -D less less-loader
 
 SCSS
 
@@ -19,16 +21,6 @@ SCSS
 - 在module配置
 
 ![image-20220220235049846](C:\Users\pc\AppData\Roaming\Typora\typora-user-images\image-20220220235049846.png)
-
-Babel 和 相对应的插件
-
-ES5
-
-![image-20220220235305923](C:\Users\pc\AppData\Roaming\Typora\typora-user-images\image-20220220235305923.png)
-
-`webpack-dev-server`实时监听打包变化 并进行一定操作
-
-
 
 Loader
 
@@ -66,4 +58,39 @@ DevServer
 
 ​	compress 启用Gzip
 
-单页面打包和多页面打包
+UglifyJs Plugin
+
+​	压缩JS代码
+
+CommonsChunkPlugin
+
+​	提取不同文件的通用部分 节省带宽
+
+```javascript
+new webpack.optimize.CommonsChunkPlugin({
+      name: "commons",
+      // (the commons chunk name)
+
+      filename: "commons.js",
+      // (the filename of the commons chunk)
+    })
+```
+
+ProvidePlugin
+
+​	自动加载模块不需要到处inport require
+
+Babel
+
+ES5
+
+![image-20220220235305923](C:\Users\pc\AppData\Roaming\Typora\typora-user-images\image-20220220235305923.png)
+
+`webpack-dev-server`实时监听打包变化 并进行一定操作
+
+##### vue
+
+npm i -D vue-loader vue-template-compiler vue-style-loader npm i -S vue
+
+单页面打包和多页
+

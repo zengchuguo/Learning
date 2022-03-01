@@ -1,4 +1,4 @@
-# Promise [文档](https://myhm_admin.gitee.io/es6_demo/view/es6/6.Promise.html#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95)
+# [文档](https://myhm_admin.gitee.io/es6_demo/view/es6/6.Promise.html#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95)
 
 前提：如果异步之间存在依赖关系就需要层层嵌套回调 因此形成回调地狱
 
@@ -25,4 +25,44 @@
   - 只要有一个参数是`fulfilled`状态 包装实例就会变成`fulfilled`状态
   - **所有**参数实例都变成`rejected`状态，包装实例就会变成`rejected`状态。
 -  `Promise.try()` 同步操作
+-  调度器 并行执行promise
+
+```javascript
+class Scheduler {
+    constructor() {
+        this.arr = [];
+        this.maxnum = 2;
+        this.runnum = 0;
+    }
+    add(promise){
+        this.arr.push(promise);
+    }
+    start() {
+        for(let i = 0;i < this.maxnum;i++)
+            this.request()
+    }
+    request(){
+        if(!this.arr || !this.arr.length || this.runnum >= this.maxnum)
+            return ;
+        this.runnum++;
+        this.arr.unshift()().then( () => {
+            this.runnum--;
+            /* 接着请求执行后面的promise */
+            this.request();
+        })
+    }
+}
+
+const scheduler = new Scheduler();
+const addTask = (time,num) => {
+    scheduler.add(() => timeout(time).then(()=>console.log(num)))
+}
+
+addTask(1000, '1');
+addTask(500, '2');
+addTask(300, '3');
+addTask(400, '4');
+
+scheduler.start()
+```
 

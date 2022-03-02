@@ -4,7 +4,6 @@
 <keep-alive :include="whiteList" :exclude="blackList" :max="amount">
   <component :is="currentComponent"></component>
 </keep-alive>
-复制代码
 ```
 
 - 在vue-router中的应用

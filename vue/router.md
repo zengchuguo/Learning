@@ -2,9 +2,17 @@
 
 目的改变视图的同时不会向后端发出请求
 
+本质上基于浏览器API运用
+
 ### hash
 
 ​	表示的是URL地址都中 # 符号 不会重新加载页面
+
+缺点：
+
+​	地址栏携带# 不美观
+
+​	有体积限制
 
 ### history
 
@@ -63,4 +71,6 @@
 ![未命名文件.png](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6f72fd5c28a54767b1892ebf9c307653~tplv-k3u1fbpfcp-watermark.awebp)
 
 ### 懒加载
+
+（） => import（‘ ’）
 

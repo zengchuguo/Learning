@@ -38,6 +38,10 @@
 
 ​	克隆节点 isCloned
 
+### Diff
+
+​	Diff算法只会比较同一层级的节点
+
 ### **patch**
 
 ​	目的：对比新旧vnode区别 根据结找到需要更新节点进行更新
@@ -57,3 +61,9 @@
 ![image-20220221211506000](C:\Users\pc\AppData\Roaming\Typora\typora-user-images\image-20220221211506000.png)
 
 #### 子节点操作
+
+### v-for 的key的设置
+
+​	key作用 在新旧虚拟节点比较时候（比较时候 会根据key值判断某个值是否发生修改
+
+​	如果没有key 不能很好重用旧的节点 

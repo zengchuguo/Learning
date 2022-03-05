@@ -4,6 +4,10 @@ webpack的打包指令
 
 config中配置
 
+vue处理
+
+- vue-loader css-loader vue-template-compiler
+
 CSS处理
 
 - css-load二处理CSS
@@ -16,6 +20,8 @@ Less
 npm i -D less less-loader
 
 SCSS
+
+或者使用postcess-loader解析模块
 
 - `npm i -D sass-loader css-loader style-loader node-sass`
 - 在module配置
@@ -87,6 +93,95 @@ ES5
 ![image-20220220235305923](C:\Users\pc\AppData\Roaming\Typora\typora-user-images\image-20220220235305923.png)
 
 `webpack-dev-server`实时监听打包变化 并进行一定操作
+
+
+
+### 打包优化
+
+#### 开发者
+
+speed-measure-webpack-plugin 
+
+​	会和mini-css-exteact-plugin冲突 
+
+优化resolve
+
+​	alias 配置文件名
+
+​	extensions 导入文件 不清楚类型 优先从左向右解析模块
+
+​	modules 打包的位置设定
+
+​	externals 导入一些例如JQ等
+
+​	缩小解析模块的位置 include exclude
+
+​	thread-loader 的多线程打包
+
+​	babel-loader 缓存 
+
+​			缓存位置node_modules/.cache/babel-loader
+
+​			 cacheDirectory：true
+
+​	cache-loader 对其他资源的缓存
+
+​		use：['cache-loader', *// 获取前面 loader 转换的结果*]
+
+​	持久化缓存
+
+	const config = {
+		 cache: {
+	    type: 'filesystem',
+	  },
+	};
+happyPack
+
+​	打包多线程
+
+模块热替换
+
+​	
+
+#### 生成者 
+
+打包结果分析
+
+​	webpack-bundle-analyzer 显示打包结果大小等数据
+
+压缩CSS
+
+​	optimize-css-assets-webpack-plugin 
+
+​	cssnano
+
+清除没用的CSS
+
+​	purgecss-webpack-plugin
+
+压缩JS	
+
+​	'terser-webpack-plugin' webpack5内置的
+
+​	UglifyJS / ES
+
+tree-shaking 针对与ES6
+
+CDN加速
+
+​	publicPath 
+
+提取公共样式
+
+​	CommonsChunkPlugin
+
+按需加载
+
+Prepack 代码运行速度
+
+Scope Hoisting	ES6
+
+​	分析模块之间依赖  打包体积小 
 
 ##### vue
 

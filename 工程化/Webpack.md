@@ -187,5 +187,18 @@ Scope Hoisting	ES6
 
 npm i -D vue-loader vue-template-compiler vue-style-loader npm i -S vue
 
-单页面打包和多页
+## hash
 
+​	hash一般是结合CDN缓存来使用，通过webpack构建之后，生成对应文件名自动带上对应的MD5值。如果文件内容改变的话，那么对应文件哈希值也会改变，对应的HTML引用的URL地址也会改变，触发CDN服务器从源服务器上拉取对应数据，进而更新本地缓存
+
+### hash
+
+​	和整个项目的构建有关 项目的文件发生改变 整个文件的hash都会改变 并且公用一个hash
+
+### chunkhash
+
+​	根据不同的入口文件(Entry)进行依赖文件解析、构建对应的chunk，生成对应的哈希值 
+
+### contenthash
+
+​	如果index.js 导入使用index.css 后 index.js 发生改变 index.css不改变  

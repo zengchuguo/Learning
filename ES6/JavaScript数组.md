@@ -1,3 +1,50 @@
+# 数组扩展
+
+- `...Array` 将一个数组转为参数序列
+  - 作用：
+    - 代替apply `Math.max(...[14.3.7])`
+- spread rest的逆运算
+- 数组作为参数传入参数 `function(...array)`
+- 实现Iterator接口的对象能 使用扩展运算符转为 数组 `eg:[...class]`
+- `Array.from(class)`转化成数组 
+  - 能将有length属性的对象 转化成数组 不需要实现Iterator接口
+  - 第二个参数类似**map方法**对元素处理后返回
+- `Array.of（）`方法用于将一组值转化成数组 `Array.of(3,8) == [3,8]`
+- `copyWithin()`
+  - target（必选） 从什么位置开始替换 
+  - start （可选 默认为0 读取的开始位置
+  - end （可选 默认数组长度 读取的结束位置
+- `find（callback）`返回**第一个** callback返回值为true的成员  诺无返回undefined
+- `findIndex（callback）`返回符合成员的下标数组 使用`===` 导致对**NaN的误判**
+- `fill（参数`）填充数组 参数1：填充数值 参数2：初始位置（默认0  参数3：终止位置（默认length-1
+- `includes()` 查看是否含有此参数 
+- 遍历器对象能使用`next（）`遍历
+  - `entries（）`键值对的遍历
+  - `keys（）` 建名遍历
+  - `values（`）键值遍历
+- 对空值不同方法不同的处理方式
+
+### 类数组转化成数组
+
+```javascript
+const a = {
+  0: 0,
+  1: 1,
+  2: 2,
+  length: //要转化必须要有的属性
+}
+
+console.log([].slice.call(a))
+/* 
+  转化类数组对象 可遍历对象（Set Map）
+  第二可选参数 类似于map函数
+*/
+console.log(Array.from(a))
+
+```
+
+
+
 # JavaScript 数组
 
 - **join()**
@@ -21,7 +68,7 @@
 
 - **sort()**
 
-  
+  `Array.sort( (a,b) => { return a - b})`
 
 - **reverse()**
 

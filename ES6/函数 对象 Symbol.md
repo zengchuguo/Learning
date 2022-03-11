@@ -9,7 +9,7 @@ function f(x = 5){
 }
 ```
 
-- 函数的length（）返回非默认传入的参数
+- 函数的length（）返回 非默认值的参数的个数
 - `...rest`获取函数的多余参数
 - 函数严格模式
   - 因函数执行先执行参数  再函数体
@@ -20,32 +20,20 @@ function f(x = 5){
   - 不能作为构造函数 没有this导致内部的this就是外部的this
   - 只能用rest 不能使用arguments
   - 不是使用yield 因此不能作为Generator函数
+- 绑定this
+  - `::`将左边的对象作为上下文环境（this对象） 绑定到右边的函数上
 - 尾调用
-  -  大概意思： 函数最后返回一个函数
+  -  大概意思： 函数最后返回一个函数执行（不能有赋值、调用后操作等等
+  -  作用：
+     -  如果使用递归调用 会同时保存很多调用栈 容易发生溢出（对于尾递归 值存在一个调用栈
   - 尾调用优化 只在严格模式下
 
-# 数组扩展
 
-- spread rest的逆运算
-- 数组作为参数传入参数 `function(...array)`
--  实现Iterator接口的对象能 使用扩展运算符转为 数组 `eg:[...class]`
-- `Array.from(class)`转化成数组 
-  - 能将有length属性的对象 转化成数组 不需要实现Iterator接口
-  - 第二个参数类似map方法对元素处理后返回
-- `Array.of（）`方法用于将一组值转化成数组
-- `find（callback）`返回第一个 callback返回值为true的成员  诺无返回undefined
-- `findIndex（callback）`返回符合成员的下标数组
-- `fill（参数`）填充数组 参数1：填充数值 参数2：初始位置（默认0  参数3：终止位置（默认length-1
-- 遍历器对象能使用`next（）`遍历
-  - `entries（）`键值对的遍历
-  - `keys（）` 建名遍历
-  - `values（`）键值遍历
-- 对空值不同方法不同的处理方式
 
 # 对象扩展
 
 - 比较值是否相等 == or === 都会自动转化数据类型
-- `Object.is( )`比较值是否相同
+- `Object.is( )`比较**左右两参数值**是否相同
 - `Object.assign()`将源对象的所有可枚举属性复制到目标对象
   - 目标对象为第一个参数
   - 同名属性 后者覆盖前者
@@ -57,7 +45,7 @@ function f(x = 5){
     - 合并多个对象
 - `__proto__`属性 获取当前实例的构造函数的prototype对象
 - `Object.setPrototypeOf()`设置第一个参数的prototype对象为第二个参数 
-- `Object.getPrototypeOf()`获得原型对象 
+- `Object.getPrototypeOf()`获得**参数**的原型对象 
 - 解构赋值
   - 浅赋值 引用值的赋值情况
   - 不会继承原型对象的属性

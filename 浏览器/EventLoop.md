@@ -19,7 +19,7 @@
 
   - 微任务
 
-    - Process.nextTick（Node） Promise object.observe（废弃） MurationObserver
+    - Process.nextTick（Node） **Promise**  object.observe（废弃） MutationObserver
 
   - ![img](https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/1/18/16860ae5ad02f993~tplv-t2oaga2asx-watermark.awebp)
 
@@ -30,7 +30,7 @@
     async function async1() {
     //await 会阻塞后面的代码
       await async2()
-    //await好比一个新then函数
+    //await后面的代码 好比一个新then函数
       console.log('async1 end')
     }
     async function async2() {
@@ -107,3 +107,65 @@
 
 
 # Node EventLoop
+
+Node.js的运行机制如下:
+
+- V8引擎解析JavaScript脚本
+- 解析后的代码，调用Node API
+- libuv库负责Node API的执行。它将不同的任务分配给不同的线程，形成一个Event Loop（事件循环），以异步的方式将任务的执行结果返回给V8引擎
+- V8引擎再将结果返回给用户
+
+![img](https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/1/12/16841bd9860c1ee9~tplv-t2oaga2asx-zoom-in-crop-mark:1304:0:0:0.awebp)
+
+**timer**
+
+执行setTimeout setInterval回调
+
+**poll**
+
+执行顺序：
+
+​	回到timer阶段执行回调
+
+​	执行I/O回调
+
+**check**
+
+​	Process.nextTick的优先级大于其他的微任务
+
+在Node.js中 微队列存在队列顺序 按先进先出的原则
+
+![img](https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/1/12/16841d5f85468047~tplv-t2oaga2asx-zoom-in-crop-mark:1304:0:0:0.awebp)
+
+**区别**
+
+​	在同步代码上的处理保持一致
+
+​	浏览器环境下，microtask的任务队列是每个**macrotask执行完之后**执行。而在Node.js中，microtask会在事件循环的**各个阶段之间**执行，也就是一个阶段执行完毕，就会去执行microtask**完成队列**的任务
+
+​	在node - 11 版本上 执行顺序和浏览器保持一致
+
+```javascript
+console.log('start')
+setTimeout(() => {
+  console.log('timer1')
+  Promise.resolve().then(function() {
+    console.log('promise1')
+  })
+}, 0)
+setTimeout(() => {
+  console.log('timer2')
+  Promise.resolve().then(function() {
+    console.log('promise2')
+  })
+}, 0)
+Promise.resolve().then(function() {
+  console.log('promise3')
+})
+console.log('end')
+/* node 中执行顺序 */
+//start end promise3 timer1 timer2 promise1 promise2
+/* 浏览器 中执行顺序 */
+//start end promise3 timer1 promise1 timer2 promise2
+```
+

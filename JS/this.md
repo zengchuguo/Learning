@@ -1,5 +1,3 @@
-**this指向 当前作用域的上一级的this**
-
 #### 全局环境
 
 ​	this 直接指向全局对象
@@ -92,6 +90,7 @@ var person2 = {
 }
 var name='Wiliam';
 person1.sayHi();
+/* setTimeout 好比 a = person2.sayHi*/
 setTimeout(person2.sayHi,100);
 setTimeout(function(){
     person2.sayHi();

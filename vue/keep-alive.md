@@ -66,6 +66,6 @@ export default {
 
 ​	可以看出，当`vnode.componentInstance`和`keepAlive`同时为truly值时，不再进入`$mount`过程，那`mounted`之前的所有钩子函数（`beforeCreate`、`created`、`beforemounted` `mount`）都不再执行。
 
-​	activated
+​	activated 缓存阶段执行
 
-​	deactivated
+​	deactivated 当移除缓存界面时候触发

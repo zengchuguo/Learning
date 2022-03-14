@@ -1,4 +1,4 @@
-# vuex
+# Vuex（适用于组件通信
 
 导出  在main.js中导入其中
 
@@ -75,7 +75,7 @@ mutations: { // 增加nutations属性
 使用
 this.$store.commit('__函数名__',param)
 
-对象参数
+对象参数传入数据 Vuex设置
 mutations: { // 增加nutations属性
 	函数名（state,payload）{
     	state.name = payload.name
@@ -116,5 +116,37 @@ import { mapActions } from 'vuex'
 async mounted() {
         await this.setNum({ number: 123 });  // 直接这样调用即可
 },
+```
+
+### 持久化
+
+​	Vuex保存的数据在页面刷新的时候 会全部重新计算一次
+
+解决方案：
+
+​	可使用LocalStore SessionStore存储结果
+
+```javascript
+1.npm install --save vuex-persistedstate
+
+2.import createPersistedState from "vuex-persistedstate"
+
+export default createStore({
+  state: {
+  },
+  mutations: {
+  }
+  actions: {
+  },
+  getters: {
+  }
+  plugins: [createPersistedState({
+    storage：windoe.sesssionStorage, //默认在LocalStorage
+  	keys:'Vuex',
+    return {
+		...state
+    }
+  )]
+})
 ```
 

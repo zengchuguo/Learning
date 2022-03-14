@@ -14,7 +14,7 @@
 
 ### 虚拟DOM
 
-<img src="C:\Users\pc\AppData\Roaming\Typora\typora-user-images\image-20220221194039493.png" alt="image-20220221194039493" />
+<img src="E:\学习心得\前端\view\image-20220221194039493.png" alt="image-20220221194039493" />
 
 ### VNode
 

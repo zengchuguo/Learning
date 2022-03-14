@@ -1,16 +1,16 @@
-#### 请求报文
+### 请求报文
 
 请求行 + 请求头部 + 空行 + 请求体
 
 请求行：请求方式 + 请求路径 + 请求协议版本
 
-#### 响应报文
+### 响应报文
 
 响应行 + 响应头部 + 空行 + 响应体
 
 响应行： 请求协议版本 + 状态码 + 状态码描述
 
-#### 请求方式
+### 请求方式
 
 get 请求资源
 
@@ -28,7 +28,7 @@ options 获取资源支持的方法
 
 connect 建立连接隧道 用于代理服务器
 
-#### get和post
+### get和post
 
 get存在缓存
 
@@ -36,7 +36,7 @@ get参数附带在URL后
 
 get的一次性发送 post第一次先将head发送 在得到100后在发送body部分
 
-#### 状态码
+### 状态码
 
 - **1xx**: 表示目前是协议处理的中间状态，还需要后续操作。
 - **2xx**: 表示成功状态。
@@ -48,15 +48,15 @@ get的一次性发送 post第一次先将head发送 在得到100后在发送body
 
 101 Switching Protocols 
 
-200 
+200  
 
 204 No Content
 
 206 Partical Content 部分资源的请求
 
-301
+301 永久重定位
 
-302
+302 临时重定位
 
 303 see Other 希望资源请求方式为get
 
@@ -68,7 +68,7 @@ get的一次性发送 post第一次先将head发送 在得到100后在发送body
 
 403 Forbidden
 
-404 
+404 找不到目标资源
 
 405 Method Not Allowed: 请求方法不被服务器端允许。
 
@@ -94,7 +94,7 @@ get的一次性发送 post第一次先将head发送 在得到100后在发送body
 
 503 服务器暂时处于超负载或正在进行停机维护
 
-#### 版本变化
+### 版本变化
 
 1.1 和 1.0 
 
@@ -113,7 +113,7 @@ get的一次性发送 post第一次先将head发送 在得到100后在发送body
   - 客户端和服务端都维护一张头部信息表 所有字段优惠存入表中 生成一个索引号 只发送索引号就可
 - 服务器推送：服务器未经请求 主动向客户端发送资源
 
-#### 压缩方式
+### 压缩方式
 
 - `gzip`: 当今最流行的压缩格式
 
@@ -129,5 +129,37 @@ get的一次性发送 post第一次先将head发送 在得到100后在发送body
   
   ```
 
+### Get Post区别
 
+- get支持缓存 post不支持
+- get请求参数携带带URL后 有大小的限制（2083） post 携带在body
+- get URL编码解析（只能接受ASCll字符） post多种编码解析
+- get一般只进行一次请求和响应 post会有两次请求和响应（火狐除外） 首先会发送header头部 再得到服务器的100（continue）后 在发送body
+- get是幂等的，而post不是。(`幂等`表示执行相同的操作，结果也是相同的)
+
+### Accept字段
+
+| 客户端                                   | 服务端                                |
+| ---------------------------------------- | ------------------------------------- |
+| `accept-encoding: gzip ,deflate, br`     | `content-encoding: gzip ,deflate, br` |
+| `accept-Language: zh-CN, zh, en`         | `content-Language: zh-CN, zh, en`     |
+| `content-Type: text/html; charset=utf-8` | `accept-Charset: charset=utf-8`       |
+
+### Access-Control-Allow字段
+
+​	主要使用于跨域处理
+
+### Cookie字段
+
+​	由于HTTP是无状态的 基于此出现保存状态（向同一个域名下发送请求 都会携带相同的Cookie	
+
+​	服务器`Set-Cookie`写入Cookie
+
+```javascript
+// 请求头
+Cookie: a=xxx;b=xxx
+// 响应头
+Set-Cookie: a=xxx
+set-Cookie: b=xxx
+```
 

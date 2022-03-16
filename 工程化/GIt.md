@@ -1,12 +1,10 @@
 ## 分支管理
 
-git checkout -b featuer/k.1.0.0_chuguo
+git checkout -b feature/项目简写.版本_开发者
 
 ## commit管理
 
 git commit -a -m "<type>(<scope>): <subject>"
-
-
 
 <type>
 
@@ -30,7 +28,7 @@ commit影响的范围，即简要说明修改会涉及的部分
 
 简要描述本次改动
 
-## remote
+## remote（远程仓库
 
 git add .
 

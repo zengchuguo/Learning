@@ -45,6 +45,7 @@ var longestPalindrome = function (s) {
     maxleng = 0
   /* 只有一个字符时 就是回文串 */
   for (let i = 0; i < n; i++) arr[[i, i]] = true
+  /* i是字符串的长度 j是开始字符位置 m是结束字符位置 */
   for (let i = 2; i <= n; i++) {
     for (let j = 0; j < n; j++) {
       let m = i + j - 1
@@ -88,6 +89,88 @@ var maxSubArray = function (nums) {
     ans = Math.max(sum, ans)
   }
   return ans
+}
+```
+
+#### [322. 零钱兑换](https://leetcode-cn.com/problems/coin-change/)
+
+给你一个整数数组 `coins` ，表示不同面额的硬币；以及一个整数 `amount` ，表示总金额。
+
+计算并返回可以凑成总金额所需的 **最少的硬币个数** 。如果没有任何一种硬币组合能组成总金额，返回 `-1` 。
+
+```javascript
+/**
+ * @param {number[]} coins
+ * @param {number} amount
+ * @return {number}
+ */
+var coinChange = function (coins, amount) {
+  const dp = []
+  dp[0] = 0
+  for (let i = 1; i <= amount; i++) {
+    dp[i] = amount
+    for (let j = 0; j < coins.length; j++) {
+      if (coins[j] <= i) {
+        /* dp[i - coins[j]] + 1 意思 当前的钱 减去一张coins[j]的值  */
+        dp[i] = Math.min(dp[i], dp[i - coins[j]] + 1)
+      }
+    }
+  }
+  console.log(dp)
+  return dp[amount] === amount ? -1 : dp[amount]
+}
+```
+
+#### [198. 打家劫舍](https://leetcode-cn.com/problems/house-robber/)
+
+你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，**如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警**。
+
+思路：
+
+1.
+
+​	`dp[i] 表示截获 i 房屋 能得到的最大值`
+
+2.
+
+​	`dp【i】表示到达 房屋 i 时能得到最大利益`
+
+​	`dp[i] = max( dp[j] + nums[i] ,   dp [i - 1])     0< j < i -2`
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var rob = function (nums) {
+  if (nums.length === 1) return nums[0]
+  if (nums.length === 2) return Math.max(nums[0], nums[1])
+  const n = nums.length
+  const ans = []
+  for (let i = 0; i < n; i++) {
+    if (i < 2) ans[i] = nums[i]
+    else {
+      ans[i] = nums[i]
+      for (let j = 0; j <= i - 2; j++) {
+        ans[i] = Math.max(ans[j] + nums[i], ans[i])
+      }
+    }
+  }
+  return Math.max.call(null, ...ans)
+}
+
+/* 思路dp */
+var rob = function (nums) {
+  if (nums.length === 1) return nums[0]
+  if (nums.length === 2) return Math.max(nums[0], nums[1])
+  const n = nums.length
+  const ans = []
+  ans[0] = nums[0]
+  ans[1] = Math.max(nums[1], ans[0])
+  for (let i = 2; i < n; i++) {
+    ans[i] = Math.max(ans[i - 2] + nums[i], ans[i - 1])
+  }
+  return ans[n - 1]
 }
 ```
 

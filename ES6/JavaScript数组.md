@@ -41,6 +41,9 @@ console.log([].slice.call(a))
 */
 console.log(Array.from(a))
 
+console.log([].slice.call(a))
+
+console.log([].concat.call(a))
 ```
 
 

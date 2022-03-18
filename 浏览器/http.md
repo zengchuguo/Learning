@@ -10,6 +10,78 @@
 
 响应行： 请求协议版本 + 状态码 + 状态码描述
 
+### 请求字段/响应字段
+
+#### **通用首部字段**
+
+**Cache-Control**  控制缓存行为
+
+**Connection**       逐跳首部、连接的管理
+
+Date                    创建报文的日期时间
+
+Pragma			   报文指令
+
+Transfer-Encoding指定报文传输主体的编码方式
+
+Upgrade			  升级为其他协议
+
+Via						代理服务器的相关信息
+
+Warning			  错误通知
+
+#### 请求字段
+
+为服务器提供一些额外信息 比如客户端希望接收到什么类型的数据
+
+Accept    用户代理可以处理的媒体类型      
+
+​	媒体类型：
+
+​		`text/html text/plain text/css application/xhtml+xml application/xml`
+
+​		`image/jpeg image/gif image/png`
+
+​		`video/mpeg video/quicktime`
+
+​		`application/jsop `
+
+**Accept-Charset**   优先的字符集
+
+**Accept-Language** 接受的字符信息
+
+**Accept-Encoding**    优先的内容编码          Accept-Encoding: gzip,deflate
+
+Authorization Web认证信息 Except期待服务器的特定行为
+
+**if-Match **比较实体标记（ETag）
+
+**if-Modified-Since **比较资源的更新时间
+
+Range 实体的字节范围请求
+
+Refer 实体的字节范围请求
+
+TE 传输编码的优先级
+
+User-AgentHTTP 客户端程序的信息
+
+#### 响应字段
+
+accept-Ranges    接受处理范围
+
+Etag 					 缓存
+
+Location  			 令客户端重定位到指定的API（302 状态码
+
+Server				   服务器信息
+
+Vary					  代理服务器信息
+
+#### 实体字段（请求 响应都有相关的字段
+
+![image-20220317191803204](E:\学习心得\前端\view\image-20220317191803204.png)
+
 ### 请求方式
 
 get 请求资源
@@ -96,7 +168,7 @@ get的一次性发送 post第一次先将head发送 在得到100后在发送body
 
 ### 版本变化
 
-1.1 和 1.0 
+**1.1 和 1.0** 
 
 - 持久化连接 
 - 加入缓存处理 强缓存和协商缓存（cahe-Control）
@@ -104,7 +176,9 @@ get的一次性发送 post第一次先将head发送 在得到100后在发送body
 - 新增请求方法 put delete option
 - 头信息新增了 Host 字段 用来指定服务器的域名
 
-2.0 和 1.1
+**2.0 和 1.1**
+
+本质上改善：1.1慢启动和TCP连接之间相互竞争带宽
 
 - 2.0 采用二进制传输形成帧形式 1.1 采用明文
 - 多路复用
@@ -112,6 +186,20 @@ get的一次性发送 post第一次先将head发送 在得到100后在发送body
   - 头部信息使用 `gzip` 和 `comprss` 压缩后发送 
   - 客户端和服务端都维护一张头部信息表 所有字段优惠存入表中 生成一个索引号 只发送索引号就可
 - 服务器推送：服务器未经请求 主动向客户端发送资源
+
+**3.0和2.0**
+
+本质上改善：TCP的队头阻塞、建立TCP连接的延时、TCP协议 僵化
+
+- 3.0 预计UDP 2.0基于TCP
+
+**UDP** **TCP**
+
+8字节 20-60字节
+
+一对多
+
+
 
 ### 压缩方式
 
@@ -163,3 +251,4 @@ Set-Cookie: a=xxx
 set-Cookie: b=xxx
 ```
 
+### 

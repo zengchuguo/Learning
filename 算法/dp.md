@@ -174,3 +174,41 @@ var rob = function (nums) {
 }
 ```
 
+#### [213. 打家劫舍 II](https://leetcode-cn.com/problems/house-robber-ii/)
+
+你是一个专业的小偷，计划偷窃沿街的房屋，每间房内都藏有一定的现金。这个地方所有的房屋都 **围成一圈** ，这意味着第一个房屋和最后一个房屋是紧挨着的。同时，相邻的房屋装有相互连通的防盗系统，**如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警** 。
+
+思路：
+
+​	dp 思路和上一题基本保持一致
+
+​	由于是头尾相连 
+
+​		因此第一个偷的话 最后一个就不能偷
+
+​		因此第一个不偷的话 最后一个可偷
+
+​	所以 分别对这两种情况上的分析
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var rob = function (nums) {
+  const n = nums.length
+  if (n == 1) return nums[0]
+  if (n == 2) return Math.max(nums[0], nums[1])
+  const ans = []
+  const f = function (start, end) {
+    for (let i = start; i <= end; i++) {
+      if (i == start) ans[i] = nums[i]
+      else if (i == start + 1) ans[i] = Math.max(nums[i], nums[i - 1])
+      else ans[i] = Math.max(ans[i - 2] + nums[i], ans[i - 1])
+    }
+    return ans[end]
+  }
+  return Math.max(f(0, n - 2), f(1, n - 1))
+}
+```
+

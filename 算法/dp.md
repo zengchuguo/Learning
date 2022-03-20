@@ -212,3 +212,30 @@ var rob = function (nums) {
 }
 ```
 
+#### [279. 完全平方数](https://leetcode-cn.com/problems/perfect-squares/)
+
+给你一个整数 `n` ，返回 *和为 `n` 的完全平方数的最少数量* 。
+
+思路：
+
+​	dp[ i ] 表示在当前 i 的使用的次数
+
+、转换方程 dp[ i ] = Min d[ i - j * j ]  ( 1 < j * j < i)
+
+```javascript
+/**
+ * @param {number} n
+ * @return {number}
+ */
+var numSquares = function (n) {
+  const dp = []
+  dp[0] = 0
+  for (let i = 1; i <= n; i++) {
+    let _min = 99999
+    for (let j = 1; j * j <= i; j++) _min = Math.min(_min, dp[i - j * j])
+    dp[i] = _min + 1
+  }
+  return dp[n]
+}
+```
+

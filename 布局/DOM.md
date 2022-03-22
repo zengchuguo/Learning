@@ -34,6 +34,8 @@ Window.getComputedStyle()
 
 
 
+X Y 是相对于显示的屏幕的距离
+
  ![image.png](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/56ea066a9fde469a8a5dfd86021b3fe7~tplv-k3u1fbpfcp-watermark.awebp)
 
 
@@ -88,6 +90,8 @@ a:visited 已经访问过的状态
 
 ：check 被选中的input
 
+
+
 ###### 伪元素
 
 ::first-line 第一行
@@ -99,6 +103,10 @@ a:visited 已经访问过的状态
 ::after 元素后插入内容
 
 ::selection 元素被选中
+
+
+
+没有优先级：
 
 ###### 兄弟选择器
 

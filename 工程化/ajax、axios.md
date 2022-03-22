@@ -2,6 +2,8 @@
 
 ​	通过对XMLHttpRequest对象和服务器交互数据 使用JSON XML HTML Text文本发送和加接受数据
 
+​	取消请求 `.abort()`
+
 ```javascript
 if (window.XMLHttpRequest) { // model browser
   xhr = new XMLHttpRequest()
@@ -38,7 +40,9 @@ xhr.onreadystatechange = function () {
 
 ​	
 
-### axios https://www.kancloud.cn/yunye/axios/234845
+### axios
+
+### https://www.kancloud.cn/yunye/axios/234845
 
 ​	基于promise的HTTP库 对XHR的封装
 
@@ -64,3 +68,4 @@ axios.patch(url[, data[, config]])
 
 目的：在每一次发起HTTP请求 都要设置响请求头等等操作 重复写代码 
 
+取消请求：`CancelToken()`

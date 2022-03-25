@@ -13,7 +13,7 @@ CSS处理
 - css-load二处理CSS
 - style-loader移植到html `MiniCssExtractPlugin.loader`
 - postcss-loader 兼容性
-- `mini-css-webpack-plugin`样式改名 直接生成打包好的CSS
+- `mini-css-webpack-plugin`样式改名 直接生成打包好的CSS 样式抽离
 
 Less
 
@@ -90,7 +90,7 @@ Babel
 
 ES5
 
-![image-20220220235305923](C:\Users\pc\AppData\Roaming\Typora\typora-user-images\image-20220220235305923.png)
+![image-20220220235305923](E:\学习心得\前端\view\image-20220220235305923.png)
 
 `webpack-dev-server`实时监听打包变化 并进行一定操作
 
@@ -112,7 +112,7 @@ speed-measure-webpack-plugin
 
 ​	modules 打包的位置设定
 
-​	externals 导入一些例如JQ等
+​	externals 导入一些例如JQ等 webpack会忽略其打包 （对需要资源采用CDN
 
 ​	缩小解析模块的位置 include exclude
 
@@ -202,3 +202,40 @@ npm i -D vue-loader vue-template-compiler vue-style-loader npm i -S vue
 ### contenthash
 
 ​	如果index.js 导入使用index.css 后 index.js 发生改变 index.css不改变  
+
+
+
+
+
+- **optimization**
+
+生产环境优化压缩css，html，js一些文件可以在optimization.minimizer中添加此插件
+
+```
+cnpm i html-minimizer-webpack-plugin css-minimizer-webpack-plugin terser-webpack-plugin -D
+
+  optimization: {
+    minimize: true,
+    minimizer: [
+      new HtmlMinimizerPlugin(), // 压缩html
+      new CssMinimizerPlugin(), // // 压缩css
+      new TerserWebpackPlugin({ // 压缩js
+        parallel: true,
+        extractComments: false,
+        terserOptions: {
+          compress: {
+            drop_console: true, // 移除console
+            drop_debugger: true // 移除debugger
+          },
+          format: {
+            comments: false  // 移除注释
+          }
+        }
+      })
+    ],
+    splitChunks: {
+      chunks: 'all', // 这表明将选择哪些 chunk 进行优化
+      name: 'chunks'  // 拆分 chunk 的名称
+    }
+  },
+```

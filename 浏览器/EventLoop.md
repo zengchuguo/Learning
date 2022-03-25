@@ -45,6 +45,7 @@
     new Promise(resolve => {
       console.log('Promise')
       resolve()
+        consolve.log('promsie resolve')
     })
       .then(function() {
         console.log('promise1')
@@ -59,6 +60,7 @@
      script start
      async2 end
      Promise
+     promsie resolve
      script end
      async1 end
      promise1

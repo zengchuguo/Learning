@@ -133,3 +133,28 @@
 - **reduce()和 reduceRight() （ES5新增）**参数为函数
 
   reduce能进行累加作用
+
+
+
+### 类数组转化成数组
+
+```javascript
+const a = {
+  0: 0,
+  1: 1,
+  2: 2,
+  length: 3//要转化必须要有的属性
+}
+
+console.log([].slice.call(a))
+/* 
+  转化类数组对象 可遍历对象（Set Map）
+  第二可选参数 类似于map函数
+*/
+console.log(Array.from(a))
+
+console.log([].slice.call(a))
+
+console.log([].concat.call(a))
+```
+

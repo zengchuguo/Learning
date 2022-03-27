@@ -239,3 +239,47 @@ var numSquares = function (n) {
 }
 ```
 
+#### [91. 解码方法](https://leetcode-cn.com/problems/decode-ways/)
+
+一条包含字母 `A-Z` 的消息通过以下映射进行了 **编码** ：
+
+```
+'A' -> "1"
+'B' -> "2"
+...
+'Z' -> "26"
+```
+
+要 **解码** 已编码的消息，所有数字必须基于上述映射的方法，反向映射回字母（可能有多种方法）。例如，`"11106"` 可以映射为：
+
+- `"AAJF"` ，将消息分组为 `(1 1 10 6)`
+- `"KJF"` ，将消息分组为 `(11 10 6)`
+
+思路：
+
+​	dp【i】 代表在当前i位置 有多少种可能
+
+​	dp【i】 = dp【i-1】+dp【i-2】（dp【i-1】代表占用i为个位数 【i-2】i作为十位数的个位数两种情况的计算
+
+```javascript
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var numDecodings = function (s) {
+  const n = s.length
+  let dp = new Array(n + 1).fill(0)
+  if (s.charAt(0) == '0') return 0
+  dp[0] = 1
+  for (let i = 1; i <= n; i++) {
+    let a = s.charAt(i - 1) - '0'
+    let b = i - 2 >= 0 ? (s.charAt(i - 2) - '0') * 10 + a : 0
+    if (a > 0 && a <= 9) {
+      dp[i] = dp[i - 1]
+    }
+    if (b >= 10 && b <= 26) dp[i] += dp[i - 2]
+  }
+  return dp[n]
+}
+```
+

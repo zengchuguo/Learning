@@ -40,32 +40,27 @@ console.log(lengthOfLIS([0,1,0,3,2,3]));
 var longestPalindrome = function (s) {
   const n = s.length
   if (n < 2) return s
-  const arr = []
-  let begin = 0,
-    maxleng = 0
-  /* 只有一个字符时 就是回文串 */
-  for (let i = 0; i < n; i++) arr[[i, i]] = true
-  /* i是字符串的长度 j是开始字符位置 m是结束字符位置 */
+  const dp = new Array(n).fill(0).map(i => {
+    return new Array(n).fill(true)
+  })
+  let _max = 0
+  let start = 0
   for (let i = 2; i <= n; i++) {
     for (let j = 0; j < n; j++) {
-      let m = i + j - 1
-
-      if (m > n) break
-      if (s.charAt(j) != s.charAt(m)) {
-        arr[[j, m]] = false
+      let m = j + i - 1
+      if (m >= n) break
+      if (s.charAt(m) == s.charAt(j)) {
+        dp[j][m] = dp[j + 1][m - 1]
       } else {
-        /* 保持m-j的值是 保证不会有j>=m的可能 */
-        if (m - j < 3) arr[[j, m]] = true
-        else arr[[j, m]] = arr[[j + 1, m - 1]]
+        dp[j][m] = false
       }
-      if (arr[[j, m]] && i > maxleng) {
-        maxleng = i
-        begin = j
+      if (i > _max && dp[j][m]) {
+        _max = i
+        start = j
       }
     }
   }
-  if (maxleng === begin) return s.charAt(0)
-  return s.substring(begin, maxleng + begin)
+  return s.substr(start, _max) ? s.substr(start, _max) : s.charAt(0)
 }
 ```
 

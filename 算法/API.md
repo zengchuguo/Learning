@@ -68,3 +68,67 @@ var nextPermutation = function (nums) {
 }
 ```
 
+#### [347. 前 K 个高频元素](https://leetcode-cn.com/problems/top-k-frequent-elements/)
+
+给你一个整数数组 `nums` 和一个整数 `k` ，请你返回其中出现频率前 `k` 高的元素。你可以按 **任意顺序** 返回答案。
+
+ 思路：
+
+​	一开始有使用到对象来存储数据后再转化成类数组操作 但在如果输入情况有-1下 会导致length属性排在前面
+
+​	因此使用map 以及对其API合理运用
+
+```js
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number[]}
+ */
+var topKFrequent = function (nums, k) {
+  const map = new Map()
+  const n = nums.length
+  for (let [i, k] of nums.entries()) {
+    /* 对于使用map 来存储数值 */
+    map.set(k, (map.get(k) || 0) + 1)
+  }
+  let arr = Array.from(map).sort((a, b) => {
+    return b[1] - a[1]
+  })
+  return arr.slice(0, k).map(item => {
+    return item[0]
+  })
+}
+```
+
+#### [324. 摆动排序 II](https://leetcode-cn.com/problems/wiggle-sort-ii/)
+
+给你一个整数数组 `nums`，将它重新排列成 `nums[0] < nums[1] > nums[2] < nums[3]...` 的顺序。
+
+你可以假设所有输入数组都可以得到满足题目要求的结果。
+
+ 思路：
+
+​	排序是必然的 然后从后面开始插入
+
+​	获得中间值 `>> 1`
+
+​	判断是否奇偶数`k & 1`
+
+```js
+/**
+ * @param {number[]} nums
+ * @return {void} Do not return anything, modify nums in-place instead.
+ */
+var wiggleSort = function(nums) {
+    // 拷贝一份排序好的nums数组
+    const sort = nums.sort((a, b) => a - b).slice();
+    /* j为总长度 i对n的一半 */
+    let j = nums.length - 1, i = j >> 1, k = 0;
+    while (k < sort.length) {
+        // 判断k的奇偶,尾头尾头尾头的给nums[k]赋值
+        nums[k] = (k & 1) ? sort[j--] : sort[i--];
+        k++;
+    }
+};
+```
+

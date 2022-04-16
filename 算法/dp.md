@@ -17,7 +17,6 @@ var lengthOfLIS = function(nums) {
     return maxans
 };
 console.log(lengthOfLIS([0,1,0,3,2,3]));
-
 ```
 
 #### [5. 最长回文子串](https://leetcode-cn.com/problems/longest-palindromic-substring/)
@@ -275,6 +274,41 @@ var numDecodings = function (s) {
     if (b >= 10 && b <= 26) dp[i] += dp[i - 2]
   }
   return dp[n]
+}
+```
+
+#### [139. 单词拆分](https://leetcode-cn.com/problems/word-break/)
+
+给你一个字符串 `s` 和一个字符串列表 `wordDict` 作为字典。请你判断是否可以利用字典中出现的单词拼接出 `s` 
+
+**注意：**不要求字典中出现的单词全部都使用，并且字典中的单词可以重复使用。
+
+ 思路：
+
+​	dp【i】代表的是在 i 位置下能否取得结果
+
+​	在中间设置一个 j 表示 在dp【j】之前是否都在成立 而且 j-i 的字符串是否在字典中
+
+​		在则设置成true 否不设置
+
+```js
+/**
+ * @param {string} s
+ * @param {string[]} wordDict
+ * @return {boolean}
+ */
+var wordBreak = function (s, wordDict) {
+  const dp = new Array(s.length)
+  dp[0] = true
+  for (let i = 1; i <= s.length; i++) {
+    for (let j = 0; j < i; j++) {
+      if (dp[j] && wordDict.includes(s.substring(j, i))) {
+        dp[i] = true
+        break
+      }
+    }
+  }
+  return dp[s.length] ?? false
 }
 ```
 

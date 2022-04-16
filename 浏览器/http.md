@@ -122,6 +122,8 @@ get的一次性发送 post第一次先将head发送 在得到100后在发送body
 
 200  
 
+201 
+
 204 No Content
 
 206 Partical Content 部分资源的请求

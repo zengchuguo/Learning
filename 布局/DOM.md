@@ -110,7 +110,7 @@ a:visited 已经访问过的状态
 
 ###### 兄弟选择器
 
-element > element 选择父元素为element 的所有为element 的子元素
+element > element 选择父元素为element 的所有为element 的直接子元素 不包括孙元素等
 
 element + element  选择在element 元素会后的element 元素
 

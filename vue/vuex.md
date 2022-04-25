@@ -141,7 +141,7 @@ export default createStore({
   getters: {
   }
   plugins: [createPersistedState({
-    storage：windoe.sesssionStorage, //默认在LocalStorage
+    storage：window.sesssionStorage, //默认在LocalStorage
   	keys:'Vuex',
     return {
 		...state

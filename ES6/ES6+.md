@@ -8,9 +8,7 @@
 
 ​	逻辑运算符 当左侧的操作数为 null 或者 undefined 时 返回右侧操作数
 
-​	和 `||` 区别
-
-​		后者对于 false  ‘ ’ 等等也会返回右侧操作数
+​	和 `||` 区别	后者对于 false  ‘ ’ 等等也会返回右侧操作数
 
 ```javascript
 console.log(false || 'default string') // default string

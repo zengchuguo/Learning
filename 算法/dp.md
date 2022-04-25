@@ -206,6 +206,52 @@ var rob = function (nums) {
 }
 ```
 
+#### [337. 打家劫舍 III](https://leetcode-cn.com/problems/house-robber-iii/)
+
+小偷又发现了一个新的可行窃的地区。这个地区只有一个入口，我们称之为 `root` 。
+
+除了 `root` 之外，每栋房子有且只有一个“父“房子与之相连。一番侦察之后，聪明的小偷意识到“这个地方的所有房屋的排列类似于一棵二叉树”。 如果 **两个直接相连的房子在同一天晚上被打劫** ，房屋将自动报警。
+
+给定二叉树的 `root` 。返回 **\*在不触动警报的情况下** ，小偷能够盗取的最高金额* 。
+
+思路：
+
+​	dp的思想 只不过 f 函数代表的是当前的root获得的最大值
+
+​	使用数组【】 0 代表没有偷 1代表偷了
+
+​	因此计算root的最大值时候 
+
+​		采用 当前root偷 则left right 不偷的最大值 //当前root不偷 则left right 偷和不偷的最大值 
+
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var rob = function (root) {
+    const f = (root, ans) => {
+        if (root == null)
+            return [0, 0]
+        const l = f(root.left)
+        const r = f(root.right)
+        const selected = root.val + l[0] + r[0]
+        const noselected = Math.max(l[0], l[1]) + Math.max(r[0], r[1])
+        return [noselected, selected]
+    }
+    const ans = f(root)
+    return Math.max(...ans)
+};
+```
+
 #### [279. 完全平方数](https://leetcode-cn.com/problems/perfect-squares/)
 
 给你一个整数 `n` ，返回 *和为 `n` 的完全平方数的最少数量* 。
@@ -309,6 +355,87 @@ var wordBreak = function (s, wordDict) {
     }
   }
   return dp[s.length] ?? false
+}
+```
+
+#### [122. 买卖股票的最佳时机 II](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-ii/)
+
+给你一个整数数组 `prices` ，其中 `prices[i]` 表示某支股票第 `i` 天的价格。
+
+在每一天，你可以决定是否购买和/或出售股票。你在任何时候 **最多** 只能持有 **一股** 股票。你也可以先购买，然后在 **同一天** 出售。返回 *你能获得的 \**最大** 利润* 。
+
+思路；
+
+​	dp【i】【】 代表在第 i 天能得到的最大值 
+
+​	0 代表当前 i 天没有股票 1 代表则是有
+
+​	每次计算当前的dp时 只需要考虑当前状态和上一级状态之间的关系
+
+```js
+/**
+ * @param {number[]} prices
+ * @return {number}
+ */
+var maxProfit = function (prices) {
+    const n = prices.length
+    const dp = new Array(n).fill(0).map(item => { return new Array(2).fill(0) })
+    /* 0 代表没有股票 1代表有 */
+    dp[0][1] = -prices[0]
+    for (let i = 1; i < n; i++) {
+        dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prices[i])
+        dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] - prices[i])
+    }
+    return dp[n - 1][0]
+}
+```
+
+#### [123. 买卖股票的最佳时机 III](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-iii/)
+
+给定一个数组，它的第 `i` 个元素是一支给定的股票在第 `i` 天的价格。
+
+设计一个算法来计算你所能获取的最大利润。你最多可以完成 **两笔** 交易。
+
+**注意：**你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。
+
+ 思路：
+
+​	题目和上一题差不多 多个对交易次数的限制
+
+​	需要多设置一个状态表示 当前已经交易的次数
+
+```js
+/**
+ * @param {number[]} prices
+ * @return {number}
+ */
+var maxProfit = function (prices) {
+    const n = prices.length
+    const dp = new Array(n).fill(0).map(item => {
+        return new Array(3).fill(0).map(ele => {
+            return new Array(2).fill(0)
+        })
+    })
+    /* 
+        初始值的设定
+        交易一次 代表是当前或之前已经买了 就算是卖出都算在一次交易中
+        dp[0][0][0] 
+        dp[0][0][1] 如果持有股 但交易数为0 不符合自己设定的题目
+        dp[0][1][0] 交易一次 计算max（不做处理， 将持有的股卖出）
+        dp[0][1][1] 交易一次 计算max（不做处理， 买入一个新股）
+        dp[0][2][0] 交易两次 计算max（不做处理， 将交易两次的持有股给卖出）
+        dp[0][2][1] 交易两次 计算max（不做处理， 将交易一次且没有股 再买入新股）
+    */
+    dp[0][1][1] = -prices[0]
+    /* 特殊点 */
+    dp[0][2][1] = Number.MIN_SAFE_INTEGER
+    for (let i = 1; i < n; i++) {
+        dp[i][1][0] = Math.max(dp[i - 1][1][0], dp[i - 1][1][1] + prices[i])
+        dp[i][1][1] = Math.max(dp[i - 1][1][1], -prices[i])
+        dp[i][2][0] = Math.max(dp[i - 1][2][0], dp[i - 1][2][1] + prices[i])
+        dp[i][2][1] = Math.max(dp[i - 1][2][1], dp[i - 1][1][0] - prices[i])
+    }
+    return Math.max(dp[n - 1][1][0], dp[n - 1][2][0])
 }
 ```
 

@@ -137,8 +137,7 @@ class Scheduler {
 const scheduler = new Scheduler()
 const addTask = (time, num) => {
   scheduler.add(
-    () =>
-      new Promise(resolve => {
+    () =>                                                                                                                                                                                                                                                                    new Promise(resolve => {
         setTimeout(() => {
           console.log(num)
           resolve()

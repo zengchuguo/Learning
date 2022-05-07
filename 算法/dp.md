@@ -431,11 +431,95 @@ var maxProfit = function (prices) {
     dp[0][2][1] = Number.MIN_SAFE_INTEGER
     for (let i = 1; i < n; i++) {
         dp[i][1][0] = Math.max(dp[i - 1][1][0], dp[i - 1][1][1] + prices[i])
-        dp[i][1][1] = Math.max(dp[i - 1][1][1], -prices[i])
+        dp[i][1][1] = Math.max(dp[i - 1][1][1], dp[i - 1][0][0] - prices[i])
         dp[i][2][0] = Math.max(dp[i - 1][2][0], dp[i - 1][2][1] + prices[i])
         dp[i][2][1] = Math.max(dp[i - 1][2][1], dp[i - 1][1][0] - prices[i])
     }
     return Math.max(dp[n - 1][1][0], dp[n - 1][2][0])
+}
+```
+
+#### [188. 买卖股票的最佳时机 IV](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-iv/)
+
+给定一个整数数组 `prices` ，它的第 `i` 个元素 `prices[i]` 是一支给定的股票在第 `i` 天的价格。
+
+设计一个算法来计算你所能获取的最大利润。你最多可以完成 **k** 笔交易。
+
+**注意：**你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。
+
+ 思路：
+
+​	和上一题一样 都是限制次数的触发 
+
+```js
+/**
+ * @param {number[]} prices
+ * @return {number}
+ */
+var maxProfit = function (K, prices) {
+    const n = prices.length
+    if(n == 0)
+        return 0
+    const dp = new Array(n).fill(0).map(item => {
+        return new Array(K + 1).fill(0).map(ele => {
+            return new Array(2).fill(0)
+        })
+    })
+    for (let i = 0; i <= K; i++) {
+        dp[0][i][1] = -prices[0]
+    }
+
+    for (let i = 1; i < n; i++) {
+        for (let k = 1; k <= K; k++) {
+            dp[i][k][0] = Math.max(dp[i - 1][k][0], dp[i - 1][k][1] + prices[i])
+            dp[i][k][1] = Math.max(dp[i - 1][k][1], dp[i - 1][k - 1][0] - prices[i])
+        }
+    }
+    return dp[n - 1][K][0]
+}
+```
+
+#### [309. 最佳买卖股票时机含冷冻期](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/)
+
+给定一个整数数组`prices`，其中第  `prices[i]` 表示第 `*i*` 天的股票价格 。
+
+设计一个算法计算出最大利润。在满足以下约束条件下，你可以尽可能地完成更多的交易（多次买卖一支股票）:
+
+- 卖出股票后，你无法在第二天买入股票 (即冷冻期为 1 天)。
+
+**注意：**你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。
+
+ 思路：
+
+​	状态为 天数 和 是否存在冷却
+
+```js
+/**
+ * @param {number[]} prices
+ * @return {number}
+ */
+var maxProfit = function (prices) {
+    const n = prices.length
+    if (n == 0)
+        return 0
+    const dp = new Array(n).fill(0).map(item => {
+        return new Array(3).fill(0)
+    })
+    /* 
+        初始值的设定
+        交易一次 代表是当前或之前已经买了 就算是卖出都算在一次交易中
+        0 代表不持股 非冷却
+        1 代表不持股 冷却
+        2 代表持股 
+    */
+    dp[0][0] = dp[0][1] = 0
+    dp[0][2] = -prices[0]
+    for (let i = 1; i < n; i++) {
+        dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1])
+        dp[i][1] = dp[i - 1][2] + prices[i]
+        dp[i][2] = Math.max(dp[i - 1][2], dp[i - 1][0] - prices[i])
+    }
+    return Math.max(dp[n - 1][0], dp[n - 1][1])
 }
 ```
 

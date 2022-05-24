@@ -44,6 +44,7 @@ var longestPalindrome = function (s) {
   })
   let _max = 0
   let start = 0
+  /* i代表的是长度 j代表起始位置 */
   for (let i = 2; i <= n; i++) {
     for (let j = 0; j < n; j++) {
       let m = j + i - 1
@@ -366,6 +367,8 @@ var wordBreak = function (s, wordDict) {
 
 思路；
 
+​	多次购买 二维数组（一层是天数 	一层是是否持有股票）
+
 ​	dp【i】【】 代表在第 i 天能得到的最大值 
 
 ​	0 代表当前 i 天没有股票 1 代表则是有
@@ -399,6 +402,8 @@ var maxProfit = function (prices) {
 **注意：**你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。
 
  思路：
+
+​	三维数组（一层天数	一层交易数	一层是否携带股票）
 
 ​	题目和上一题差不多 多个对交易次数的限制
 
@@ -437,5 +442,36 @@ var maxProfit = function (prices) {
     }
     return Math.max(dp[n - 1][1][0], dp[n - 1][2][0])
 }
+```
+
+#### [343. 整数拆分](https://leetcode.cn/problems/integer-break/)
+
+给定一个正整数 `n` ，将其拆分为 `k` 个 **正整数** 的和（ `k >= 2` ），并使这些整数的乘积最大化。
+
+返回 *你可以获得的最大乘积* 。
+
+ 思路：
+
+​	基本的dp思想 只需要判断在dp 当前的 i 的最大值进行保存 后面不断修改中间值 j 来寻找最大值
+
+​	`dp[i]  =  j * (i - j) j > 1 且 j < i`
+
+```js
+/**
+ * @param {number} n
+ * @return {number}
+ */
+ var integerBreak = function(n) {
+    const dp = new Array(n + 1).fill(0)
+    for(let i = 1;i <= n; i++){
+        let t = 1
+        for(let j = 1;j < i; j++){
+            /* 这种写法 不需要考虑对dp进行初始化 */
+            t = Math.max(t, Math.max(j * (i - j), j * dp[i - j]))
+        }
+        dp[i] = t
+    }
+    return dp[n]
+};
 ```
 

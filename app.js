@@ -1,31 +1,24 @@
 /**
- * @param {number[]} nums
- * @return {number[][]}
+ * @param {string} a
+ * @param {string} b
+ * @return {string}
  */
- var permuteUnique = function (nums) {
-  nums.sort((a, b) => {
-    return a - b;
-  });
-  const n = nums.length;
-  const res = [];
-  const f = (arr, i) => {
-    if (i === n) {
-      res.push([...arr]);
-    }
-    else {
-      for (let k = i; k < n; k++) {
-        if (k !== i && nums[k] === nums[k - 1]) {
-          continue;
-        }
-        arr.push(nums[k]);
-        [nums[i], nums[k]] = [nums[k], nums[i]];
-        f(arr, i + 1);
-        [nums[i], nums[k]] = [nums[k], nums[i]];
-        arr.pop();
-      }
-    }
-  };
-  f([], 0);
-  return res;
+ var addBinary = function(a, b) {
+  const al = a.length
+  const bl = b.length
+  const n = Math.max(al, bl)
+  const res = []
+  let e = 0
+  for(let i = 0;i < n; i++){
+      let at = i < al ? Number(a.charAt(al - 1 - i)) : 0
+      let bt = i < bl ? Number(b.charAt(bl - 1 - i)) : 0
+      console.log(at,bt,e)
+      res[i] = (at + bt + e) % 2
+      e = Math.floor((at + bt + e) / 2)
+  }
+  if(e != 0){
+      res.unshift(e)
+  }
+  return res.join('')
 };
-console.log(permuteUnique([0,0,0,0,0,1]))
+console.log(addBinary('1','111'))

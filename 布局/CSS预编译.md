@@ -1,3 +1,13 @@
+#### link import区别
+
+- link是原生形式 import是CSS3添加的
+- 加载页面， link是同步进行加载的 而import当页面加载完毕后被加载的
+- link具备更好的兼容性
+
+
+
+
+
 #### SCSS
 
 优势：

@@ -523,3 +523,58 @@ var maxProfit = function (prices) {
 }
 ```
 
+#### [131. 分割回文串](https://leetcode.cn/problems/palindrome-partitioning/)
+
+给你一个字符串 `s`，请你将 `s` 分割成一些子串，使每个子串都是 **回文串** 。返回 `s` 所有可能的分割方案。
+
+**回文串** 是正着读和反着读都一样的字符串。
+
+思路：
+
+​	基本的回文思路计算 主要要运用已经使用到的结果！！！
+
+```js
+/**
+ * @param {string} s
+ * @return {string[][]}
+ */
+var partition = function (s) {
+    const n = s.length;
+    const dp = new Array(n).fill(0).map(_ => { return new Array(n).fill(true) })
+    for (let i = n - 1; i >= 0; i--) {
+        for (let j = i + 1; j < n; j++) {
+            // 动态规划 之前计算结果的运用
+            /**
+             在 i 的循环中 不能使用 0 ~ n - 1
+             因为假设当计算 1 ~ 4 时候 
+             其实 2 ~ 3 结果还没计算过的
+             */
+            if (s.charAt(i) === s.charAt(j)) {
+                dp[i][j] = dp[i + 1][j - 1]
+            } else {
+                dp[i][j] = false
+            }
+        }
+    }
+    console.log(dp)
+    const res = []
+    const dfs = (i, arr) => {
+        if (i === n) {
+            res.push([...arr])
+        }
+        else {
+            for (let j = i; j < n; j++) {
+                if (dp[i][j]) {
+                    arr.push(s.slice(i, j + 1))
+                    dfs(j + 1, arr)
+                    arr.pop()
+                }
+            }
+        }
+    }
+    dfs(0, [])
+    return res
+};
+console.log(partition('abbab'))
+```
+
